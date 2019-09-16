@@ -91,8 +91,8 @@ module.exports.sendEmail = function(obj){
 	
 
 	let mailOptions = {
-	    from: 'isaque.vilson27@gmail.com', // TODO: email sender
-	    to: 'ivbc.eng17@uea.edu.br', // TODO: email receiver
+	    from: 'app.ecocidadao@gmail.com', // TODO: email sender
+	    to: 'app.ecocidadao@gmail.com', // TODO: email receiver
 	    subject: 'Nova Denúncia Registrada',
 	    text: 'Denúncia',
 	    html: html
