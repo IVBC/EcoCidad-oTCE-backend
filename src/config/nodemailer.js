@@ -102,7 +102,7 @@ module.exports.sendEmail = function(obj){
     if (err) {
         return log('Error occurs');
     }
-    return log('Email sent!!!');
+    return log('Email sent!!');
 });
 ;
 }
