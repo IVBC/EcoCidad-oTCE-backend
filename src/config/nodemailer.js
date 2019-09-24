@@ -16,7 +16,9 @@ let transporter = nodemailer.createTransport({
 module.exports.sendEmail = function(obj){
 	console.log(obj);
 	let html = '';
+	let emailReceiver = '';
 	if(obj['anonymous']){
+			emailReceiver = '';
 			html = '<span id="goog_1438282657"></span><span id="goog_1438282658"></span><br />'+
 		'<div style="text-align: center;">'+
 		'<div class="separator" style="background-color: #e7f5fe; clear: both; text-align: center;">'+
@@ -46,6 +48,7 @@ module.exports.sendEmail = function(obj){
 		'<b><br /></b></div>'+
 		'</div>';
 	} else{
+		emailReceiver = obj['email'];
 		html = '<span id="goog_1438282657"></span><span id="goog_1438282658"></span><br />'+
 	'<div style="text-align: center;">'+
 	'<div class="separator" style="background-color: #e7f5fe; clear: both; text-align: center;">'+
@@ -73,7 +76,7 @@ module.exports.sendEmail = function(obj){
 	'<b><br /></b>'+
 	'<br />'+
 	'<div class="separator" style="clear: both; text-align: center;">'+
-	'<b><img border="0" data-original-height="465" data-original-width="620" height="300" src="https://1.bp.blogspot.com/-Xhjjx0E0m58/XX8FcXx426I/AAAAAAAARls/cI0PghB3Zn8EBlB3wmO4cn7X2MRrRlLNgCLcBGAsYHQ/s400/pneus_abandonados.jpg" width="400" /></b></div>'+
+	'<b><img border="0" data-original-height="465" data-original-width="620" height="300" src="'+ obj['url_img'] +'" width="400" /></b></div>'+
 	'<div class="separator" style="clear: both; text-align: center;">'+
 	'<b><br /></b></div>'+
 	'<div class="separator" style="background-color: #effdff; clear: both; text-align: center;">'+
@@ -88,7 +91,22 @@ module.exports.sendEmail = function(obj){
 
 
 	
-	
+	if(emailReceiver!=''){
+		let mailOptionsPrivate = {
+	    	from: 'app.ecocidadao@gmail.com', // TODO: email sender
+	    	to: emailReceiver, // TODO: email receiver
+	    	subject: 'Nova Denúncia Registrada',
+	    	text: 'Denúncia',
+	    	html: html
+		};
+
+		transporter.sendMail(mailOptionsPrivate, (err, data) => {
+    		if (err) {
+       			 return log('Error occurs Private email');
+    		}
+    		console.log('Email Private sent!!');
+		});
+	}
 
 	let mailOptions = {
 	    from: 'app.ecocidadao@gmail.com', // TODO: email sender
@@ -99,10 +117,9 @@ module.exports.sendEmail = function(obj){
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
-    if (err) {
-        return log('Error occurs');
-    }
-    return log('Email sent!!');
-});
-;
+    	if (err) {
+       		 return log('Error BROAD occurs');
+    	}
+    	return log('Email BROAD sent!!');
+	});
 }
